@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import '../styles/tasklist.scss'
 
@@ -30,7 +30,9 @@ export function TaskList() {
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-    
+    tasks[id].isComplete == false ? tasks[id].isComplete = true : tasks[id].isComplete = false
+    setTasks([...tasks])
+
   }
 
   function handleRemoveTask(id: number) {
@@ -41,7 +43,7 @@ export function TaskList() {
     <section className="task-list container">
       <header>
         <h2>Minhas tasks</h2>
-
+        
         <div className="input-group">
           <input 
             type="text" 
