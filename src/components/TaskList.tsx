@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import '../styles/tasklist.scss'
 
@@ -17,7 +17,7 @@ export function TaskList() {
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
     const task: Task = {
-      id: tasks.length,
+      id: Math.random(),
       title: newTaskTitle,
       isComplete: false
     }
@@ -30,13 +30,24 @@ export function TaskList() {
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-    tasks[id].isComplete == false ? tasks[id].isComplete = true : tasks[id].isComplete = false
-    setTasks([...tasks])
+    const finTasks = tasks
+    for(let task of finTasks){
+      if(task.id == id){
+        if(task.isComplete == false){
+          task.isComplete = true
+        }else{
+          task.isComplete = false
+        }
+      }
+    }
+    setTasks([...finTasks])
 
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+    const delTask = tasks.filter((e) => e.id != id)
+    setTasks([...delTask])
   }
 
   return (
@@ -47,7 +58,7 @@ export function TaskList() {
         <div className="input-group">
           <input 
             type="text" 
-            placeholder="Adicionar nova task" 
+            placeholder="Adicionar novo todo" 
             onChange={(e) => setNewTaskTitle(e.target.value)}
             value={newTaskTitle}
           />
